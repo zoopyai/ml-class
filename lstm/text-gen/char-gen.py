@@ -1,3 +1,9 @@
+# dbg1 - odsc class notes
+
+# LSTM the parameters is input x weights if input is 5, 
+# another 1 is state and 5 weights than parameters = (5+1) x 5 = 30
+
+
 import keras
 from keras.models import Sequential
 from keras.layers import Dense, Activation
@@ -50,7 +56,8 @@ for i, sentence in enumerate(sentences):
     y[i, char_indices[next_chars[i]]] = 1
 
 model = Sequential()
-model.add(GRU(128, input_shape=(config.maxlen, len(chars))))
+# dbg1 - original - model.add(GRU(128, input_shape=(config.maxlen, len(chars))))
+model.add(LSTM(128, input_shape=(config.maxlen, len(chars))))
 model.add(Dense(len(chars), activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer="rmsprop")
 

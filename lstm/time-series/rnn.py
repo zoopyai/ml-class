@@ -7,6 +7,7 @@ from keras.models import Sequential
 from keras.layers import Dense, Flatten
 from keras.layers import LSTM, SimpleRNN, Dropout
 from keras.callbacks import LambdaCallback
+from keras.optimizers import RMSprop
 
 import wandb
 from wandb.keras import WandbCallback
@@ -68,8 +69,14 @@ model.add(SimpleRNN(1, input_shape=(config.look_back,1 )))  # dbg1 - the last 1 
 # following is with 5 inputs (like in PDF)
 model.add(Dense(1))
 # dbg1 - model.add(SimpleRNN(5, input_shape=(config.look_back,1 )))  # dbg1 - the last 1 is how many you are trying to predict.  If there are two deseases than that will be 2
-model.compile(loss='mae', optimizer='rmsprop')
-model.fit(trainX, trainY, epochs=1000, batch_size=20, validation_data=(testX, testY),  callbacks=[WandbCallback(), PlotCallback(trainX, trainY, testX, testY, config.look_back)])
+# model.compile(loss='mae', optimizer='rmsprop')  # dbg1 - rmsprop is popular choice for LSTM
+
+# dbg1 - this learning rate of 0.1 is 100 times higher may not learn
+# dbg1 - model.compile(loss='mae', optimizer=RMSprop(lr=0.1))  # dbg1 - rmsprop is popular choice for LSTM
+model.compile(loss='mae', optimizer=RMSprop(lr=0.01))  # dbg1 - rmsprop is popular choice for LSTM
+model.fit(trainX, trainY, epochs=1000, 
+    batch_size=20, validation_data=(testX, testY),  
+    callbacks=[WandbCallback(), PlotCallback(trainX, trainY, testX, testY, config.look_back)])
 
 
 

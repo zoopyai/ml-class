@@ -1,3 +1,5 @@
+#dbg1 - changes and notes from classnotes
+
 from keras.preprocessing import sequence
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation
@@ -42,6 +44,8 @@ model.add(Embedding(config.vocab_size,
                     config.embedding_dims,
                     input_length=config.maxlen))
 model.add(Dropout(0.5))
+
+# dbg1- for text this is 1D, for images it was 2D
 model.add(Conv1D(config.filters,
                  config.kernel_size,
                  padding='valid',
