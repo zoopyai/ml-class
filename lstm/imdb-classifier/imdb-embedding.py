@@ -1,3 +1,10 @@
+# dbg1 - notes and changes from class
+# how do you get around running out of memory
+# size of gpu and keep embedding really smaller. 
+# either make this table of embedding shorter or table size = small.
+# accompanying pdf from odsc ML Class LSTM - Nov1.pdf
+
+
 # need to download glove from http://nlp.stanford.edu/data/glove.6B.zip
 # wget http://nlp.stanford.edu/data/glove.6B.zip
 # unzip http://nlp.stanford.edu/data/glove.6B.zip
@@ -58,7 +65,8 @@ for word, index in tokenizer.word_index.items():
 
 ## create model
 model = Sequential()
-model.add(Embedding(config.vocab_size, 100, input_length=config.maxlen, weights=[embedding_matrix], trainable=False))
+model.add(Embedding
+  (config.vocab_size, 100, input_length=config.maxlen, weights=[embedding_matrix], trainable=False))
 model.add(LSTM(config.hidden_dims, activation="sigmoid"))
 model.add(Dense(1, activation='sigmoid'))
 model.compile(loss='binary_crossentropy',

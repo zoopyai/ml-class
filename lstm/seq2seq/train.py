@@ -1,3 +1,6 @@
+# dbg1 - class notes
+# similar to translation/train.
+
 # adapted from https://blog.keras.io/a-ten-minute-introduction-to-sequence-to-sequence-learning-in-keras.html
 
 from keras.models import Sequential

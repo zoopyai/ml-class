@@ -1,4 +1,6 @@
 [default]
-entity: qualcomm
-project: translate-sep14
-base_url: https://api.wandb.ai
+entity = qualcomm
+project = translate-sep14
+base_url = https://api.wandb.ai
+disabled = true
+

@@ -1,7 +1,10 @@
+#dbg1 - on class and notes
+#dbg1 - Bidirectional LSTM was used in QA and it's best practice ... see class notes.
+
 from keras.preprocessing import sequence
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation
-from keras.layers import Embedding, LSTM
+from keras.layers import Embedding, LSTM, Bidirectional
 from keras.layers import Conv1D, Flatten
 from keras.datasets import imdb
 import wandb
@@ -36,7 +39,26 @@ X_test = sequence.pad_sequences(X_test, maxlen=config.maxlen)
 model = Sequential()
 model.add(Embedding(config.vocab_size,
                     config.embedding_dims,
-                    input_length=config.maxlen))
+                    input_length=config.maxlen), 
+                    trainable=False)  # dbg1 s== adding trainable = False
+
+
+# model.add(Embedding(config.vocab_size,
+#                     config.embedding_dims,
+#                     input_length=config.maxlen))
+
+
+
+#dbg2 - for bidirectional
+# model.add(Bidirectional(LSTM(config.hidden_dims, activation="sigmoid")))
+
+
+model.add(LSTM(config.hidden_dims, activation="sigmoid", return_sequences=True))
+#dbg1 - added one more layer (deep LSTM - see class notes)
+#dbg1 - the dimentions by default above LSTM is only giving it's final output
+#dbg1 - all other dimentions ... what we wanted is two dimentional i.e., on all "I love this movie" (see pdf)
+#dbg1 - you can see keras docs and see... we need return state
+#dbg1 - 
 model.add(LSTM(config.hidden_dims, activation="sigmoid"))
 model.add(Dense(1, activation='sigmoid'))
 model.compile(loss='binary_crossentropy',

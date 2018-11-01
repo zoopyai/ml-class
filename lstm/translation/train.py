@@ -1,3 +1,7 @@
+#dbg1 - class notes
+# similar to seq2seq
+# self training.  downloaded    
+
 '''Sequence to sequence example in Keras (character-level).
 
 # Data download

@@ -1,8 +1,11 @@
+#dbg1 - class notes
+
 import imdb
 import numpy as np
 from keras.preprocessing import text
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, Dropout, Dense, Flatten
+from keras.utils import np_utils
 import wandb
 from wandb.keras import WandbCallback
 from sklearn.linear_model import LogisticRegression
