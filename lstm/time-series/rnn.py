@@ -1,3 +1,5 @@
+# dbg1 - odsc class notes
+
 import numpy as np
 import pandas as pd
 
@@ -16,7 +18,9 @@ wandb.init()
 config = wandb.config
 
 config.repeated_predictions = True
-config.look_back = 4
+# dbg1 - this is only looking back 4 digit 
+# (in text - it can be more.. this 4 may be less... this is how much lookback you need)
+config.look_back = 4 
 
 def load_data(data_type="airline"):
     if data_type == "flu":
@@ -59,7 +63,11 @@ testX = testX[:, :, np.newaxis]
 
 # create and fit the RNN
 model = Sequential()
-model.add(SimpleRNN(1, input_shape=(config.look_back,1 )))
+# dbg1 - this 1 (in as a first param of SimpleRNN is state vector size)
+model.add(SimpleRNN(1, input_shape=(config.look_back,1 )))  # dbg1 - the last 1 is how many you are trying to predict.  If there are two deseases than that will be 2
+# following is with 5 inputs (like in PDF)
+model.add(Dense(1))
+# dbg1 - model.add(SimpleRNN(5, input_shape=(config.look_back,1 )))  # dbg1 - the last 1 is how many you are trying to predict.  If there are two deseases than that will be 2
 model.compile(loss='mae', optimizer='rmsprop')
 model.fit(trainX, trainY, epochs=1000, batch_size=20, validation_data=(testX, testY),  callbacks=[WandbCallback(), PlotCallback(trainX, trainY, testX, testY, config.look_back)])
 
